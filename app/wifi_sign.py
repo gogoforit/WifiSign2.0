@@ -160,6 +160,10 @@ if __name__ == '__main__':
                                                       remarks='hello',
                                                       _id=_id)
                     student_info_remote.save()
+                else:
+                    student = StudentInfo.objects(_id=_id).first()
+                    student.status = '0'
+                    student.save()
 
 
 
