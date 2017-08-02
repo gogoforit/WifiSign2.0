@@ -123,14 +123,14 @@ if __name__ == '__main__':
             print(mac)
             if mac in students_connect_info:
                 _id = ''.join([_id, '/', mac])
-                # print(_id)
+                students_connect_info[mac]['status'] = '1'
                 if StudentInfo.objects(_id=_id):
                     student = StudentInfo.objects(_id=_id).first()
                     student.break_time = now_time
                     student.status = '1'
                     student.save()
+                    print(student.status)
                 else:
-                    print(11)
                     student_info_remote = StudentInfo(name=students_connect_info[mac]['name'],
                                                       student_id=students_connect_info[mac]['student_id'],
                                                       class_id=students_connect_info[mac]['class_id'],
@@ -142,11 +142,10 @@ if __name__ == '__main__':
                                                       remarks='hello',
                                                       _id=_id)
                     student_info_remote.save()
-            # TODO 如果没有连接的设备的处理
+
         for key in students_connect_info.keys():
             _id = ''.join([today_date, '/', class_num])
             _id = ''.join([_id, '/', key])
-            print(_id)
             if students_connect_info[key]['status'] == '0':
                 if not StudentInfo.objects(_id=_id):
                     student_info_remote = StudentInfo(name=students_connect_info[key]['name'],
