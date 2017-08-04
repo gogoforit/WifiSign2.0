@@ -142,6 +142,7 @@ if __name__ == '__main__':
                                                           break_time=now_time,
                                                           status='1',
                                                           date=today_date,
+                                                          class_num=class_num,
                                                           remarks='hello',
                                                           _id=__id)
                         student_info_remote.save()
@@ -159,6 +160,7 @@ if __name__ == '__main__':
                                                           break_time=now_time,
                                                           status='0',
                                                           date=today_date,
+                                                          class_num=class_num,
                                                           remarks='hello',
                                                           _id=__id)
                         student_info_remote.save()
