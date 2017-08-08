@@ -99,6 +99,7 @@ def get_class_num():
 
 if __name__ == '__main__':
     while True:
+        time.sleep(10)
         students_connect_info = {}  # 所有学生的签到信息
 
         with switch_db(Student, 'local_db') as Student:
