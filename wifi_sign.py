@@ -7,6 +7,7 @@ from app.moduls.student import Student
 from app.moduls.student_info import StudentInfo
 
 
+
 local_username = os.environ['LOCAL_USERNAME']
 local_password = os.environ['LOCAL_PASSWORD']
 local_host = os.environ['LOCAL_HOST']
@@ -54,9 +55,11 @@ def get_pid():
     pid = k[0]
     return pid
 
+
 def get_date():
     today_date = time.strftime('%Y-%m-%d', time.localtime(time.time()))
     return today_date
+
 
 def get_now_datetime():
     now_hour = time.strftime('%H')
@@ -65,9 +68,11 @@ def get_now_datetime():
     now_time = datetime.time(int(now_hour), int(now_min), int(now_sec))
     return now_time
 
+
 def get_now_time():
     now_time = time.strftime('%H:%M:%S')
     return now_time
+
 
 def get_class_num():
     now_time = get_now_datetime()
@@ -97,6 +102,19 @@ def get_class_num():
         info['class_num'] = '5'
     return info
 
+
+def get_remarks(class_id):
+    from app.moduls.remarks import Remarks
+    class_info = get_class_num()
+    print(class_num, class_id)
+    with switch_db(Remarks, 'local_db') as Remarks:
+        if Remarks.objects(class_num=class_info['class_num'],class_id=class_id):
+            remarks_info = Remarks.objects(class_num=class_num,class_id=class_id).first()
+            return remarks_info['remarks']
+        else:
+            return '无'
+
+
 if __name__ == '__main__':
     while True:
         time.sleep(10)
@@ -123,6 +141,7 @@ if __name__ == '__main__':
         today_date = get_date()
         now_time = get_now_time()
         _id = ''.join([today_date, '/', class_num])
+        remarks = get_remarks(class_id)
 
         with switch_db(StudentInfo, 'remote_db') as StudentInfo:
             for mac in macs:
@@ -144,7 +163,7 @@ if __name__ == '__main__':
                                                           status='1',
                                                           date=today_date,
                                                           class_num=class_num,
-                                                          remarks='hello',
+                                                          remarks=remarks,
                                                           _id=__id)
                         student_info_remote.save()
 
@@ -162,7 +181,7 @@ if __name__ == '__main__':
                                                           status='0',
                                                           date=today_date,
                                                           class_num=class_num,
-                                                          remarks='hello',
+                                                          remarks=remarks,
                                                           _id=__id)
                         student_info_remote.save()
                     else:
