@@ -152,6 +152,7 @@ if __name__ == '__main__':
                         student = StudentInfo.objects(_id=__id).first()
                         student.break_time = now_time
                         student.status = '1'
+                        student.remarks = remarks
                         student.save()
                     else:
                         student_info_remote = StudentInfo(name=students_connect_info[mac]['name'],
@@ -187,6 +188,7 @@ if __name__ == '__main__':
                     else:
                         student = StudentInfo.objects(_id=__id).first()
                         student.status = '0'
+                        student.remarks = remarks
                         student.save()
 
 
