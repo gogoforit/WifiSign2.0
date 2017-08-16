@@ -108,8 +108,8 @@ def get_remarks(class_id):
     class_info = get_class_num()
     print(class_num, class_id)
     with switch_db(Remarks, 'local_db') as Remarks:
-        if Remarks.objects(class_num=class_info['class_num'],class_id=class_id):
-            remarks_info = Remarks.objects(class_num=class_num,class_id=class_id).first()
+        if Remarks.objects(class_num=class_info['class_num'], class_id=class_id, date=get_date()):
+            remarks_info = Remarks.objects(class_num=class_num, class_id=class_id, date=get_date()).first()
             return remarks_info['remarks']
         else:
             return '无'
